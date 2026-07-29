@@ -109,3 +109,19 @@
 .login__signin-link:hover {
   opacity: 0.6;
 }
+
+.login__error {
+  margin: auto;
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #434242;
+  border: 1px solid #ede7e7;
+  border-radius: 6px;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  text-align: center;
+  color: #ffff;
+  max-width: 360px;
+}

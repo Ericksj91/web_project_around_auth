@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../images/logo.svg";
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, loginError, onInputChange }) => {
   const [data, setData] = useState({ email: "", password: "" });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
+    onInputChange();
   };
 
   const handleSubmit = (e) => {
@@ -22,12 +23,17 @@ const Login = ({ handleLogin }) => {
           className=" login__header-logo"
           src={logo}
         />
-        <Link to="/signup" className="login__header-title">
+        <Link
+          to="/signup"
+          className="login__header-title"
+          onClick={onInputChange}
+        >
           Regístrate
         </Link>
       </div>
       <div className="login__content page section">
         <p className="login__welcome">Incia sesión</p>
+        {loginError && <p className="login__error">{loginError}</p>}
         <form className="login__form" onSubmit={handleSubmit}>
           <input
             id="email"

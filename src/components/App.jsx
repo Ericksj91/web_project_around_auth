@@ -30,8 +30,9 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
-  const lcocation = useLocation();
+  const location = useLocation();
 
   const handleRegistration = ({ password, email }) => {
     auth
@@ -58,12 +59,16 @@ function App() {
         return auth.checkToken(data.token);
       })
       .then((userInfo) => {
+        setLoginError("");
         setUserData({ email: userInfo.data.email });
         setIsLoggedIn(true);
         const redirectPath = location.state?.from?.pathname || "/";
         navigate(redirectPath);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoginError("Correo o contraseña incorrectos. Inténtalo de nuevo.");
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -225,6 +230,7 @@ function App() {
           isLoggedIn,
           setIsLoggedIn,
           userData,
+          setLoginError,
         }}
       >
         <Routes>
@@ -265,7 +271,11 @@ function App() {
             path="/signin"
             element={
               <ProtectedRoute anonymous>
-                <Login handleLogin={handleLogin} />
+                <Login
+                  handleLogin={handleLogin}
+                  loginError={loginError}
+                  onInputChange={() => setLoginError("")}
+                />
               </ProtectedRoute>
             }
           />

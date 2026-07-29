@@ -8,7 +8,8 @@ import close from "../../images/close.svg";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { userData, setIsLoggedIn } = useContext(CurrentUserContext);
+  const { userData, setIsLoggedIn, setLoginError } =
+    useContext(CurrentUserContext);
 
   const navigate = useNavigate();
 
@@ -16,6 +17,7 @@ function Header() {
     removeToken();
     navigate("/signin");
     setIsLoggedIn(false);
+    setLoginError("");
   }
 
   return (
@@ -23,7 +25,9 @@ function Header() {
       {menuOpen && (
         <div className="header__mobile-menu">
           <p className="header__email">{userData.email}</p>
-          <button className="header__logout">Cerrar sesión</button>
+          <button onClick={signOut} className="header__logout">
+            Cerrar sesión
+          </button>
         </div>
       )}
       <header className="header page__section">
